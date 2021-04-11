@@ -1,0 +1,14 @@
+html, body, #react-mountpoint {
+    height: 100%;
+}
+
+#main {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+}
