@@ -1,6 +1,6 @@
 {
   "name": "spring-react-app",
-  "description": "Minesweeper using React with Spring Boot",
+  "description": "BoardGame using React with Spring Boot",
   "dependencies": {
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
@@ -9,6 +9,9 @@
     "css-loader": "^5.0.2",
     "react": "~17.0.1",
     "react-dom": "~17.0.1",
+    "react-router-dom": "4.3.1",
+    "react-select": "4.3.0",
+    "reactstrap": "^8.9.0",
     "style-loader": "^2.0.0",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0"
