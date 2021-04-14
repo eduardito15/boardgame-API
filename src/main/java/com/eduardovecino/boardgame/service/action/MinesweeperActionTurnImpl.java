@@ -2,6 +2,7 @@ package com.eduardovecino.boardgame.service.action;
 
 import com.eduardovecino.boardgame.annotation.ActionImpl;
 import com.eduardovecino.boardgame.constants.ActionsEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 import com.eduardovecino.boardgame.dto.ActionResponseDTO;
 import com.eduardovecino.boardgame.model.Board;
 import com.eduardovecino.boardgame.model.Game;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Component
-@ActionImpl(gameName = "minesweeper", action = ActionsEnum.TURN)
+@ActionImpl(gameName = GamesEnum.MINESWEEPER, action = ActionsEnum.TURN)
 public class MinesweeperActionTurnImpl implements ActionService {
 
     private final MinesweeperGameImpl minesweeperGame;

@@ -1,6 +1,7 @@
 package com.eduardovecino.boardgame.service.game;
 
 import com.eduardovecino.boardgame.annotation.GameImpl;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -17,7 +18,7 @@ public class GameFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameFactory.class);
 
     private ConfigurableApplicationContext context;
-    private Map<String, GameService> games;
+    private Map<GamesEnum, GameService> games;
 
     public GameFactory(ApplicationContext context) {
         this.context = (ConfigurableApplicationContext) context;
@@ -35,7 +36,7 @@ public class GameFactory {
         });
     }
 
-    public GameService getInstance(String gameName) {
+    public GameService getInstance(GamesEnum gameName) {
         return games.get(gameName);
     }
 }

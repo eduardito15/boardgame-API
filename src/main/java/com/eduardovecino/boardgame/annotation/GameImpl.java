@@ -1,5 +1,7 @@
 package com.eduardovecino.boardgame.annotation;
 
+import com.eduardovecino.boardgame.constants.GamesEnum;
+
 import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
@@ -12,6 +14,6 @@ public @interface GameImpl {
      *
      * @return
      */
-    public String gameName();
+    public GamesEnum gameName();
 
 }

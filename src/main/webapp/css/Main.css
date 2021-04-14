@@ -55,6 +55,12 @@ ol, ul {
     margin-right: 10px;
 }
 
+.extended-select {
+    width: 30%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .select-label {
     margin-left: 15px;
     margin-right: 5px;

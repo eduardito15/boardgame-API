@@ -1,6 +1,5 @@
 package com.eduardovecino.boardgame.service.impl;
 
-import com.eduardovecino.boardgame.constants.GameStatusEnum;
 import com.eduardovecino.boardgame.dto.ActionRequestDTO;
 import com.eduardovecino.boardgame.dto.ActionResponseDTO;
 import com.eduardovecino.boardgame.exceptions.InvalidActionException;
@@ -53,16 +52,18 @@ public class ActionFlowImpl implements ActionFlow {
         this.validateAction(gameById, action, actionRequestDTO);
 
         ActionResponseDTO actionResponseDTO = action.executeAction(gameById, actionRequestDTO.getRow(), actionRequestDTO.getColumn());
+        gameById.setStatus(this.gameFactory.getInstance(gameById.getGameName()).calculateStatus(gameById));
         actionResponseDTO.setGameId(gameById.getId());
-        actionResponseDTO.setStatus(this.gameFactory.getInstance(gameById.getGameName()).calculateStatus(gameById));
+        actionResponseDTO.setStatus(gameById.getStatus());
+        gameFlow.saveGame(gameById);
 
         return actionResponseDTO;
     }
 
     private void validateAction(Game gameById, ActionService actionService, ActionRequestDTO actionRequestDTO) {
-        if (!GameStatusEnum.PLAYING.equals(gameById.getStatus())) {
+        if (gameById.getStatus().isEnded()) {
             LOGGER.warn("Invalid action for game {} Game is finished in status {}", gameById.getId(), gameById.getStatus());
-            throw new InvalidActionException(String.format("Invalid action for game %s Game is finished in status %s", gameById.getId(), gameById.getStatus().name()));
+            throw new InvalidActionException(String.format("Invalid action for game %s Game is finished in status %s", gameById.getId(), gameById.getStatus().getStatus().name()));
         }
 
         if (actionRequestDTO.getRow() < 0 || actionRequestDTO.getColumn() < 0 || actionRequestDTO.getRow() >= gameById.getGameParams().getRows() ||

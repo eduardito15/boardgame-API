@@ -1,5 +1,5 @@
 package com.eduardovecino.boardgame.constants;
 
 public enum GameStatusEnum {
-    PLAYING, WIN, LOSE
+    PLAYING, WIN, GAME_OVER
 }

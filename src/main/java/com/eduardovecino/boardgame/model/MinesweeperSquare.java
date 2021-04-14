@@ -2,6 +2,10 @@ package com.eduardovecino.boardgame.model;
 
 public class MinesweeperSquare extends Square {
 
+    public MinesweeperSquare(Integer row, Integer column) {
+        super(row, column);
+    }
+
     private boolean flag;
     private boolean mine;
     private int adjacentMines;

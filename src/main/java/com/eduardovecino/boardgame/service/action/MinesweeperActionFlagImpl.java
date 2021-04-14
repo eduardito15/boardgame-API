@@ -2,6 +2,7 @@ package com.eduardovecino.boardgame.service.action;
 
 import com.eduardovecino.boardgame.annotation.ActionImpl;
 import com.eduardovecino.boardgame.constants.ActionsEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 import com.eduardovecino.boardgame.dto.ActionResponseDTO;
 import com.eduardovecino.boardgame.model.Board;
 import com.eduardovecino.boardgame.model.Game;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-@ActionImpl(gameName = "minesweeper", action = ActionsEnum.FLAG)
+@ActionImpl(gameName = GamesEnum.MINESWEEPER, action = ActionsEnum.FLAG)
 public class MinesweeperActionFlagImpl implements ActionService {
 
     @Override

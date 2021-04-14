@@ -1,6 +1,7 @@
 package com.eduardovecino.boardgame.dto;
 
 import com.eduardovecino.boardgame.constants.GameStatusEnum;
+import com.eduardovecino.boardgame.model.GameStatus;
 import com.eduardovecino.boardgame.model.Square;
 
 import java.util.Set;
@@ -9,7 +10,7 @@ public class ActionResponseDTO {
 
     private String gameId;
     private Set<Square> boardResult;
-    private GameStatusEnum status;
+    private GameStatus status;
 
     public String getGameId() {
         return gameId;
@@ -27,11 +28,11 @@ public class ActionResponseDTO {
         this.boardResult = boardResult;
     }
 
-    public GameStatusEnum getStatus() {
+    public GameStatus getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatusEnum status) {
+    public void setStatus(GameStatus status) {
         this.status = status;
     }
 }

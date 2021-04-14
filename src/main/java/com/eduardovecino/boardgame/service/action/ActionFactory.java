@@ -2,6 +2,7 @@ package com.eduardovecino.boardgame.service.action;
 
 import com.eduardovecino.boardgame.annotation.ActionImpl;
 import com.eduardovecino.boardgame.constants.ActionsEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,7 @@ public class ActionFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(ActionFactory.class);
 
     private ConfigurableApplicationContext context;
-    private Map<Pair<String, ActionsEnum>, ActionService> actions;
+    private Map<Pair<GamesEnum, ActionsEnum>, ActionService> actions;
 
     public ActionFactory(ApplicationContext context) {
         this.context = (ConfigurableApplicationContext) context;
@@ -37,7 +38,7 @@ public class ActionFactory {
         });
     }
 
-    public ActionService getInstance(String gameName, ActionsEnum action) {
+    public ActionService getInstance(GamesEnum gameName, ActionsEnum action) {
         return actions.get(Pair.of(gameName, action));
     }
 }

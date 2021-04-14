@@ -1,14 +1,18 @@
 package com.eduardovecino.boardgame.model;
 
-import com.eduardovecino.boardgame.constants.GameStatusEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Game {
 
+    @Id
     private String id;
-    private String gameName;
+    private GamesEnum gameName;
     private GameParams gameParams;
     private Board board;
-    private GameStatusEnum status;
+    private GameStatus status;
     private String user;
     private int timeMin;
     private int timeSec;
@@ -21,11 +25,11 @@ public class Game {
         this.id = id;
     }
 
-    public String getGameName() {
+    public GamesEnum getGameName() {
         return gameName;
     }
 
-    public void setGameName(String gameName) {
+    public void setGameName(GamesEnum gameName) {
         this.gameName = gameName;
     }
 
@@ -45,11 +49,11 @@ public class Game {
         this.board = board;
     }
 
-    public GameStatusEnum getStatus() {
+    public GameStatus getStatus() {
         return status;
     }
 
-    public void setStatus(GameStatusEnum status) {
+    public void setStatus(GameStatus status) {
         this.status = status;
     }
 

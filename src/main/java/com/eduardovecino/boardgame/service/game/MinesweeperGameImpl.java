@@ -2,6 +2,7 @@ package com.eduardovecino.boardgame.service.game;
 
 import com.eduardovecino.boardgame.annotation.GameImpl;
 import com.eduardovecino.boardgame.constants.GameStatusEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 import com.eduardovecino.boardgame.dto.CreateGameRequestDTO;
 import com.eduardovecino.boardgame.dto.CreateMinesweeperGameRequestDTO;
 import com.eduardovecino.boardgame.model.*;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Component
-@GameImpl(gameName = "minesweeper")
+@GameImpl(gameName = GamesEnum.MINESWEEPER)
 public class MinesweeperGameImpl implements GameService {
 
     private Random random;
@@ -33,7 +34,7 @@ public class MinesweeperGameImpl implements GameService {
         gameParameters.setColumns(createGameRequestDTO.getColumns());
         gameParameters.setMines(((CreateMinesweeperGameRequestDTO) createGameRequestDTO).getMines());
         game.setGameParams(gameParameters);
-
+        game.setStatus(new GameStatus(GameStatusEnum.PLAYING, false));
         game.setBoard(new Board(createGameRequestDTO.getRows(), createGameRequestDTO.getColumns()));
         fillBoard(game);
 
@@ -41,11 +42,14 @@ public class MinesweeperGameImpl implements GameService {
     }
 
     @Override
-    public GameStatusEnum calculateStatus(Game game) {
+    public GameStatus calculateStatus(Game game) {
+        GameStatus result = new GameStatus();
         Set<Square> minesSquares = this.getMinesSquares(game.getBoard());
 
         if (minesSquares.stream().anyMatch(s -> ((MinesweeperSquare) s).isTurned())) {
-            return GameStatusEnum.LOSE;
+            result.setStatus(GameStatusEnum.GAME_OVER);
+            result.setEnded(true);
+            return result;
         }
 
         List<Square[]> listSquares = Arrays.asList(game.getBoard().getSquares());
@@ -53,10 +57,43 @@ public class MinesweeperGameImpl implements GameService {
         squares.removeAll(minesSquares);
 
         if (squares.stream().allMatch(s -> ((MinesweeperSquare) s).isTurned())) {
-            return GameStatusEnum.WIN;
+            result.setStatus(GameStatusEnum.WIN);
+            result.setEnded(true);
+            return result;
         }
 
-        return GameStatusEnum.PLAYING;
+        result.setStatus(GameStatusEnum.PLAYING);
+        result.setEnded(false);
+        return result;
+    }
+
+    @Override
+    public Board prepareBoardToReloadGame(Game game) {
+        Board board = fillEmptyBoard(new Board(game.getGameParams().getRows(), game.getGameParams().getColumns()));
+
+        IntStream.range(0, game.getGameParams().getRows()).forEach(row ->
+                IntStream.range(0, game.getGameParams().getColumns()).forEach(column -> {
+                    MinesweeperSquare square = (MinesweeperSquare) game.getBoard().getSquare(row, column);
+                    if (square.isTurned()) {
+                        board.updateSquare(row, column, square);
+                    }
+                })
+        );
+
+        return board;
+    }
+
+    @Override
+    public Board fillEmptyBoard(Board board) {
+
+        IntStream.range(0, board.getRows()).forEach(row ->
+                IntStream.range(0, board.getColumns()).forEach(column -> {
+                    Square square = new Square(row, column);
+                    board.updateSquare(row, column, square);
+                })
+        );
+
+        return board;
     }
 
     private void fillBoard(Game game) {
@@ -66,9 +103,7 @@ public class MinesweeperGameImpl implements GameService {
 
         IntStream.range(0, game.getGameParams().getRows()).forEach(row ->
                 IntStream.range(0, game.getGameParams().getColumns()).forEach(column -> {
-                    MinesweeperSquare square = new MinesweeperSquare();
-                    square.setRow(row);
-                    square.setColumn(column);
+                    MinesweeperSquare square = new MinesweeperSquare(row, column);
                     if (minesPosition.contains(game.getGameParams().getColumns() * row + column)) {
                         square.setMine(true);
                     } else {

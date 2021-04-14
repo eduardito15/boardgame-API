@@ -1,6 +1,7 @@
 package com.eduardovecino.boardgame.annotation;
 
 import com.eduardovecino.boardgame.constants.ActionsEnum;
+import com.eduardovecino.boardgame.constants.GamesEnum;
 
 import java.lang.annotation.*;
 
@@ -14,7 +15,7 @@ public @interface ActionImpl {
      *
      * @return
      */
-    public String gameName();
+    public GamesEnum gameName();
 
     /**
      * Annotates the template action name of ActionImpl

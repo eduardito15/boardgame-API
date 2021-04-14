@@ -16,7 +16,7 @@ class Board extends Component {
                     <label className="select-label">GameId: </label>
                     <label className="select-label">{this.props.gameId}</label>
                     <label className="select-label">Time: </label>
-                    <Stopwatch isGameEnded={this.props.isGameEnded} pace={() => this.props.pace()} currentTimeMin={this.props.currentTimeMin} currentTimeSec={this.props.currentTimeSec}/>
+                    <Stopwatch isGameEnded={this.props.status.ended} pace={() => this.props.pace()} currentTimeMin={this.props.currentTimeMin} currentTimeSec={this.props.currentTimeSec}/>
                 </div>
 
                 <ul>
@@ -24,7 +24,7 @@ class Board extends Component {
                             return (<div key={r[0].row} className="board-row">
                                 {r.map(cell => {
                                         return <Square key={this.props.columns * cell.row + cell.column} value={cell}
-                                                       onClick={() => this.props.onClick(cell.row, cell.column)} disabled={this.props.status == 'LOSE'}
+                                                       onClick={() => this.props.onClick(cell.row, cell.column)} disabled={this.props.status.ended}
                                                        onContextMenu={() => this.props.onContextMenu(cell.row, cell.column)}/>
                                     }
                                 )}
