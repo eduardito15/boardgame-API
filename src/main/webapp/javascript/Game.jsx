@@ -273,9 +273,11 @@ class Game extends Component {
 
                 <div className="config">
                     <label className="select-label">Name: </label>
-                    <input className="select-label" type="text" name="user" value={this.state.user}
+                    <input className="select" type="text" name="user" value={this.state.user}
                            onChange={(e) => this.onChangeInput(e)}/>
                     <button className="button" color="link" onClick={() => this.getGamesByUser()}>Find Games</button>
+                </div>
+                <div className="config">
                     <label className="select-label">Games: </label>
                     <Select className="extended-select" options={this.state.gamesIds}
                             onChange={this.handleChangeLoadGame}/>

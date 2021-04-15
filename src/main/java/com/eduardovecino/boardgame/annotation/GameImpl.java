@@ -14,6 +14,6 @@ public @interface GameImpl {
      *
      * @return
      */
-    public GamesEnum gameName();
+    GamesEnum gameName();
 
 }

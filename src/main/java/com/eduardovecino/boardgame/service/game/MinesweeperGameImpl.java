@@ -74,7 +74,7 @@ public class MinesweeperGameImpl implements GameService {
         IntStream.range(0, game.getGameParams().getRows()).forEach(row ->
                 IntStream.range(0, game.getGameParams().getColumns()).forEach(column -> {
                     MinesweeperSquare square = (MinesweeperSquare) game.getBoard().getSquare(row, column);
-                    if (square.isTurned()) {
+                    if (square.isTurned() || square.isFlag() || square.isQuestion()) {
                         board.updateSquare(row, column, square);
                     }
                 })
@@ -94,6 +94,11 @@ public class MinesweeperGameImpl implements GameService {
         );
 
         return board;
+    }
+
+    @Override
+    public boolean validCreateGameRequest(CreateGameRequestDTO createGameRequestDTO) {
+        return ((CreateMinesweeperGameRequestDTO)createGameRequestDTO).getMines() > 0;
     }
 
     private void fillBoard(Game game) {

@@ -1,6 +1,5 @@
 package com.eduardovecino.boardgame.dto;
 
-import com.eduardovecino.boardgame.constants.GameStatusEnum;
 import com.eduardovecino.boardgame.model.GameStatus;
 import com.eduardovecino.boardgame.model.Square;
 

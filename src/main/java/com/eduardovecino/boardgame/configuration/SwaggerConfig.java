@@ -26,7 +26,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Board Game API")
-                .contact(new Contact("Eduardo Vecino", "https://www.linkedin.com/in/eduardo-vecino-da-fonte-45686670", "eduardovecino15@gmail.com"))
+                .contact(new Contact("Eduardo Vecino", "http://104.236.210.85:8080/swagger-ui.html", "eduardovecino15@gmail.com"))
                 .description("Board Game API")
                 .build();
     }

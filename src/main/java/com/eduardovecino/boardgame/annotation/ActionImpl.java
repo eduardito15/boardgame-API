@@ -15,12 +15,12 @@ public @interface ActionImpl {
      *
      * @return
      */
-    public GamesEnum gameName();
+    GamesEnum gameName();
 
     /**
      * Annotates the template action name of ActionImpl
      *
      * @return
      */
-    public ActionsEnum action();
+    ActionsEnum action();
 }

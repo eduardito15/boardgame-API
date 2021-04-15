@@ -1,6 +1,8 @@
 package com.eduardovecino.boardgame.service.impl;
 
+import com.eduardovecino.boardgame.constants.ExceptionsMessages;
 import com.eduardovecino.boardgame.constants.GamesEnum;
+import com.eduardovecino.boardgame.constants.LogsMessages;
 import com.eduardovecino.boardgame.dto.CreateGameRequestDTO;
 import com.eduardovecino.boardgame.dto.GameResponseDTO;
 import com.eduardovecino.boardgame.dto.GamesByUserRequestDTO;
@@ -20,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,28 +43,22 @@ public class GameFlowImpl implements GameFlow {
         GameService gameService = this.gameFactory.getInstance(GamesEnum.valueOf(createGameRequestDTO.getGameName().toUpperCase()));
 
         if (gameService == null) {
-            LOGGER.warn("Game {} not found implementation", createGameRequestDTO.getGameName());
-            throw new NotFoundGameException("Game not found");
+            LOGGER.warn(LogsMessages.NOT_FOUND_IMPLEMENTATION_FOR_GAME, createGameRequestDTO.getGameName());
+            throw new NotFoundGameException(ExceptionsMessages.GAME_NOT_FOUND);
         }
 
         this.validateCreateGameRequest(gameService, createGameRequestDTO);
 
         Game newGame = gameService.createNewGame(createGameRequestDTO);
-        newGame.setId(UUID.randomUUID().toString());
         newGame.setGameName(GamesEnum.valueOf(createGameRequestDTO.getGameName().toUpperCase()));
         newGame.setUser(createGameRequestDTO.getUser());
-        gameRepository.save(newGame);
+        newGame = gameRepository.save(newGame);
         return getGameResponseFromGame(gameService, newGame, true);
     }
 
     @Override
     public Game getGameById(String gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new NotFoundGameException(String.format("Not found game with id: %s", gameId)));
-    }
-
-    @Override
-    public Board getGameBoardByGameId(String gameId) {
-        return this.getGameById(gameId).getBoard();
+        return gameRepository.findById(gameId).orElseThrow(() -> new NotFoundGameException(String.format(ExceptionsMessages.NOT_FOUND_GAME_WITH_ID_S, gameId)));
     }
 
     private GameResponseDTO getGameResponseFromGame(GameService gameService,Game game, boolean emptyBoard) {
@@ -102,8 +97,8 @@ public class GameFlowImpl implements GameFlow {
     public GameResponseDTO loadGame(String gameId) {
         Game gameById = this.getGameById(gameId);
         if (gameById == null) {
-            LOGGER.warn("Not found game with id: {}", gameId);
-            throw new NotFoundGameException("Not found game with id: " + gameId);
+            LOGGER.warn(LogsMessages.NOT_FOUND_GAME_WITH_ID, gameId);
+            throw new NotFoundGameException(ExceptionsMessages.NOT_FOUND_GAME_WITH_ID + gameId);
         }
 
         GameService gameService = this.gameFactory.getInstance(gameById.getGameName());
@@ -115,26 +110,24 @@ public class GameFlowImpl implements GameFlow {
     @Override
     public GamesByUserResponseDTO getUserGamesIds(GamesByUserRequestDTO gamesByUserRequestDTO) {
         if (StringUtils.isBlank(gamesByUserRequestDTO.getUserName())) {
-            if (StringUtils.isBlank(gamesByUserRequestDTO.getUserName())) {
-                throw new InvalidActionException("User name is mandatory to find user games");
-            }
+            throw new InvalidActionException(ExceptionsMessages.USER_NAME_IS_MANDATORY_TO_FIND_USER_GAMES);
         }
 
         List<Game> byUserName = gameRepository.findByUserName(gamesByUserRequestDTO.getUserName());
-        return new GamesByUserResponseDTO(byUserName.stream().map(g -> g.getId()).collect(Collectors.toList()));
+        return new GamesByUserResponseDTO(byUserName.stream().map(Game::getId).collect(Collectors.toList()));
     }
 
     private void validateCreateGameRequest(GameService gameService, CreateGameRequestDTO createGameRequestDTO) {
         if (createGameRequestDTO.getRows() <= 0 || createGameRequestDTO.getColumns() <=0) {
-            throw new InvalidActionException("Rows and columns must be grater than 0");
+            throw new InvalidActionException(ExceptionsMessages.ROWS_AND_COLUMNS_MUST_BE_GRATER_THAN_0);
         }
 
         if (StringUtils.isBlank(createGameRequestDTO.getUser())) {
-            throw new InvalidActionException("User name is mandatory");
+            throw new InvalidActionException(ExceptionsMessages.USER_NAME_IS_MANDATORY);
         }
 
         if (!gameService.validCreateGameRequest(createGameRequestDTO)) {
-            throw new InvalidActionException("Invalid create game request");
+            throw new InvalidActionException(ExceptionsMessages.INVALID_CREATE_GAME_REQUEST);
         }
     }
 

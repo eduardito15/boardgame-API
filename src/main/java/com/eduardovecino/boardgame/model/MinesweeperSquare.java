@@ -1,5 +1,7 @@
 package com.eduardovecino.boardgame.model;
 
+import java.util.Objects;
+
 public class MinesweeperSquare extends Square {
 
     public MinesweeperSquare(Integer row, Integer column) {
@@ -52,4 +54,32 @@ public class MinesweeperSquare extends Square {
         this.question = question;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        MinesweeperSquare that = (MinesweeperSquare) o;
+        return flag == that.flag &&
+                mine == that.mine &&
+                adjacentMines == that.adjacentMines &&
+                turned == that.turned &&
+                question == that.question;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), flag, mine, adjacentMines, turned, question);
+    }
+
+    @Override
+    public String toString() {
+        return "MinesweeperSquare{" +
+                "flag=" + flag +
+                ", mine=" + mine +
+                ", adjacentMines=" + adjacentMines +
+                ", turned=" + turned +
+                ", question=" + question +
+                '}';
+    }
 }

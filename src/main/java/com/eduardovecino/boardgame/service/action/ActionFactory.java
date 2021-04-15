@@ -3,6 +3,7 @@ package com.eduardovecino.boardgame.service.action;
 import com.eduardovecino.boardgame.annotation.ActionImpl;
 import com.eduardovecino.boardgame.constants.ActionsEnum;
 import com.eduardovecino.boardgame.constants.GamesEnum;
+import com.eduardovecino.boardgame.constants.LogsMessages;
 import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,10 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Action Factory is responsible for create actions implementations.
+ * Search beans with annotation @ActionImpl and add to map by game and action.
+ */
 @Service
 public class ActionFactory {
 
@@ -34,7 +39,7 @@ public class ActionFactory {
             Object bean = beansWithAnnotation.get(lck);
             ActionImpl annotation = bean.getClass().getAnnotation(ActionImpl.class);
             actions.put(Pair.of(annotation.gameName(), annotation.action()), (ActionService) bean);
-            LOGGER.info("Add action {} impl for {}", annotation.action(), annotation.gameName());
+            LOGGER.info(LogsMessages.ADD_ACTION_IMPL_FOR, annotation.action(), annotation.gameName());
         });
     }
 
