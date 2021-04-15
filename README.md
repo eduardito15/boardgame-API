@@ -25,9 +25,22 @@ SpringTests, Mockito, Junit4
 Graphic design of the page \
 User authentication
 
-#Endpoints and Examples
+# Functionality
 
-##### Create new Minesweeper Game
+- API for the game
+- API client library for the API designed above.
+- When a cell with no adjacent mines is revealed, all adjacent squares will be revealed (and repeat)
+- Ability to 'flag' a cell with a question mark or red flag
+- Detect when game is over
+- Persistence
+- Time tracking
+- Ability to start a new game and preserve/resume the old ones
+- Ability to select the game parameters: number of rows, columns, and mines
+- Ability to support multiple users/accounts
+
+# Endpoints and Examples
+
+### Create new Minesweeper Game
 
 POST: /api/game/new \
 
@@ -79,7 +92,7 @@ Response: \
 }
 ```
 
-##### Action
+### Action
 
 POST: /api/game/action
 
@@ -131,7 +144,7 @@ Response: \
 }
 ```
 
-##### Game By Id
+### Game By Id
 
 GET: /api/game/4e9ff054-e6c1-494b-8708-4cfa76abad46/load
 
@@ -175,7 +188,7 @@ Response: \
   "timeSec": 0
 }
 ```
-##### Games By User
+### Games By User
 
 POST: /api/games/byUser
 
