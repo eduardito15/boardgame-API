@@ -42,9 +42,9 @@ User authentication
 
 ### Create new Minesweeper Game
 
-POST: /api/game/new \
+POST: /api/game/new 
 
-Request: \
+Request: 
 ```
 {
     "columns": 8,
@@ -55,9 +55,9 @@ Request: \
 }
 ```
 
-Possible game names: minesweeper \
+Possible game names: minesweeper 
 
-Response: \
+Response: 
 
 ```
 {
@@ -96,7 +96,7 @@ Response: \
 
 POST: /api/game/action
 
-Request: \
+Request: 
 
 ```
 {
@@ -109,9 +109,9 @@ Request: \
 }
 ```
 
-Possible action: TURN|FLAG|QUESTION \
+Possible action: TURN|FLAG|QUESTION 
 
-Response: \
+Response: 
 
 ```
 {
@@ -148,7 +148,7 @@ Response: \
 
 GET: /api/game/4e9ff054-e6c1-494b-8708-4cfa76abad46/load
 
-Response: \
+Response: 
 
 ```
 {
@@ -192,7 +192,7 @@ Response: \
 
 POST: /api/games/byUser
 
-Request: \
+Request: 
 
 ```
 {
@@ -200,7 +200,7 @@ Request: \
 }
 ```
 
-Response \
+Response 
 
 ```
 {
