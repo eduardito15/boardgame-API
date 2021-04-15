@@ -1,4 +1,4 @@
-# eduardovecino-gameboard-API
+# game-board-API
 
 # Demo
 
