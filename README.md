@@ -3,7 +3,7 @@
 # Demo
 
 Swagger URL: http://104.236.210.85:8080/swagger-ui.html \
-Play: http://104.236.210.85:8080/
+Play: http://boardgame-env.eba-2usnnj5p.us-east-2.elasticbeanstalk.com:8080/ \
 
 # Guidelines
 
